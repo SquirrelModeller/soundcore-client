@@ -1,0 +1,60 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "soundcore-client"
+version = "0.1.0"
+description = "Independent, interoperable client for Soundcore-family Bluetooth accessories"
+# readme = "README.md"   # re-enable once README.md is committed (currently gitignored, under review)
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = ["bluetooth", "rfcomm", "soundcore", "earbuds", "interoperability"]
+dependencies = []
+
+[project.optional-dependencies]
+test = ["pytest>=7"]
+
+[project.scripts]
+soundcore = "soundcore.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["soundcore"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 110
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+# Type checking: vanilla-pyright "standard". basedpyright users -- this pins the
+# project to standard rather than basedpyright's stricter default, and switches
+# off the report categories that fire on the deliberately-dynamic command table
+# (soundcore/commands.py:_install_simple) and the untyped event-parser bag.
+[tool.pyright]
+include = ["soundcore", "tests", "examples"]
+pythonVersion = "3.10"
+typeCheckingMode = "standard"
+reportAny = false
+reportExplicitAny = false
+reportUnknownMemberType = false
+reportUnknownArgumentType = false
+reportUnknownVariableType = false
+reportUnknownParameterType = false
+reportMissingParameterType = false
+reportUnannotatedClassAttribute = false
+reportUnusedCallResult = false
+
+# tests/examples may run without the dev extras installed
+[[tool.pyright.executionEnvironments]]
+root = "tests"
+reportMissingImports = false
+
+[[tool.pyright.executionEnvironments]]
+root = "examples"
+reportMissingImports = false

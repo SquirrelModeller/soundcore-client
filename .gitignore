@@ -1,0 +1,31 @@
+# This repo is clean-room. Nothing derived from decompiled vendor code belongs here.
+# Hard blocks in case a stray copy lands in the tree:
+*.dex
+*.smali
+*.apk
+*.aab
+jadx-*/
+out/
+decrypted-dex/
+recovered-dex/
+smali/
+**/vendor-decompiled/**
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+dist/
+build/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# Nix / direnv
+result
+result-*
+.direnv/
+
+# Temp remove .md docs
+*.md
